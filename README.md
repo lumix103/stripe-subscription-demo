@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowSync
 
-## Getting Started
+FlowSync is a **demo app** built with **Next.js** and **Stripe** to learn how to
+set up subscription payments.  
+It’s not a real product — just a sandbox for experimenting with subscription
+flows, Stripe Checkout, and webhook handling.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- Next.js frontend + API routes (no backend server needed)
+- Stripe Checkout integration
+- Subscription tiers (configurable in Stripe Dashboard)
+- Webhook handling for subscription lifecycle events
+- Local development only (not deployed)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (React)
+- **Payments:** Stripe
+- **Package Manager:** pnpm
+- **Database:** None (left up to the user if needed)
+
+---
+
+## 📦 Getting Started
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/lumix103/stripe-subscription-demo.git
+cd stripe-subscription-demo
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+Create a `.env.local` file in the root directory:
 
-To learn more about Next.js, take a look at the following resources:
+```text
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_12345
+NEXT_SECRET_STRIPE_KEY=sk_test_12345
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_STRIPE_WEBHOOK_KEY=whsec_12345
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `NEXT_PUBLIC_STRIPE_PUBLIC_KEY` → Your Stripe publishable key  
+- `NEXT_SECRET_STRIPE_KEY` → Your Stripe secret key  
+- `NEXT_PUBLIC_APP_URL` → The base URL of your app (local dev: `http://localhost:3000`)  
+- `NEXT_STRIPE_WEBHOOK_KEY` → Webhook signing secret from Stripe CLI  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the app
 
-## Deploy on Vercel
+```bash
+pnpm dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app should now be running at:  
+👉 `http://localhost:3000`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔄 Stripe Setup
+
+1. Log in to your [Stripe Dashboard](https://dashboard.stripe.com/).
+2. Create a **Product** and **Price** (subscription plan).
+3. Copy the **Price ID** into your Next.js API route where you create the
+   Checkout session.
+4. Use the Stripe CLI to forward webhooks to your local app:
+
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
+---
+
+## 📚 Learning Goals
+
+This project is meant to help you:
+
+- Learn how to integrate Stripe subscriptions into a Next.js app
+- Practice using Next.js API routes for server-side Stripe logic
+- Understand how to handle webhooks for subscription lifecycle events
+- Build a foundation you can extend with a database later
+
+---
+
+## ⚠️ Disclaimer
+
+FlowSync is a **demo project**.  
+It does not provide real services, and no actual products are delivered.  
+Use it only for **learning and testing**.
+
+---
+
+## 📝 License
+
+MIT License
